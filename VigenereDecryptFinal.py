@@ -1,7 +1,7 @@
 # Imports module of pandas.
 import pandas
 
-# This segment downloads the Vigenére table.
+# This segment downloads the Vigenére table. Add your own path that reaches it in your device. Table is available at https://github.com/nschun/Decrypt_Ciphers/commit/a0caf2bda8a00051429ea885e2544f94db8a44e8
 vigenere = pandas.read_csv("/Users/Nathan/Desktop/Cipher/Vigenere Cipher Table Python.csv", index_col=0)
 
 
