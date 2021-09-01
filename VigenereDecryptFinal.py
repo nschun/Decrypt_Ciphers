@@ -1,10 +1,12 @@
+# Imports module of pandas.
 import pandas
 
 # This segment downloads the Vigenére table.
 vigenere = pandas.read_csv("/Users/Nathan/Desktop/Cipher/Vigenere Cipher Table Python.csv", index_col=0)
 
-    # Most variables.
+
 def Euclidean_Distance(OBSE, OBST, OBSA, OBSO, OBSI, OBSN, OBSS, OBSH, OBSR, OBSD, OBSL, OBSC, OBSU, OBSM, OBSW, OBSF, OBSG, OBSY, OBSP, OBSB, OBSV, OBSK, OBSJ, OBSX, OBSQ, OBSZ):
+    """Finds the Euclidean Distance of the expected value and the observed value by subtracting one from the other and then squaring."""
     EXPE = 0.127
     EXPT = 0.09
     EXPA = 0.082
@@ -33,8 +35,9 @@ def Euclidean_Distance(OBSE, OBST, OBSA, OBSO, OBSI, OBSN, OBSS, OBSH, OBSR, OBS
     EXPZ = 0.0005
     return (OBSE - EXPE)**2 + (OBST - EXPT)**2 + (OBSA - EXPA)**2 + (OBSO - EXPO)**2 + (OBSI - EXPI)**2 + (OBSN - EXPN)**2 + (OBSS - EXPS)**2 + (OBSH - EXPH)**2 + (OBSR - EXPR)**2 + (OBSD - EXPD)**2 + (OBSL - EXPL)**2 + (OBSC - EXPC)**2 + (OBSU - EXPU)**2 + (OBSM - EXPM)**2 + (OBSW - EXPW)**2 + (OBSF - EXPF)**2 + (OBSG - EXPG)**2 + (OBSY - EXPY)**2 + (OBSP - EXPP)**2 + (OBSB - EXPB)**2 + (OBSV - EXPV)**2 + (OBSK - EXPK)**2 + (OBSJ - EXPJ)**2 + (OBSX - EXPX)**2 + (OBSQ - EXPQ)**2 + (OBSZ - EXPZ)**2
 
-# Does a reverse lookup by finding which CipherText character matches with a plaintext.
+
 def Plaintext_Lookup(Key, Freq):
+    """Does a reverse lookup on the Vigenere table by finding which CipherText character matches with a plaintext. It finds the smallest float percentage found for each of the 26 floats. That is most likely to be the letter of the key."""
     OBSE = Freq[vigenere[Key]["E"]]
     OBST = Freq[vigenere[Key]["T"]]
     OBSA = Freq[vigenere[Key]["A"]]
@@ -63,47 +66,50 @@ def Plaintext_Lookup(Key, Freq):
     OBSZ = Freq[vigenere[Key]["Z"]]
     return Euclidean_Distance(OBSE, OBST, OBSA, OBSO, OBSI, OBSN, OBSS, OBSH, OBSR, OBSD, OBSL, OBSC, OBSU, OBSM, OBSW, OBSF, OBSG, OBSY, OBSP, OBSB, OBSV, OBSK, OBSJ, OBSX, OBSQ, OBSZ)
 
+
 def Get_Slice(Range, Demo_Cipher, Key_Length):
-    """This function defines the one fifth slice."""
+    """This function defines the one fifth slice of the Cipher Text."""
     Slice = []
     # This loop makes the following repeat as many times as the key's length.
-    for I in range(Range, len(Demo_Cipher), Key_Length):
-        Slice.append(Demo_Cipher[I].upper())
+    for Index in range(Range, len(Demo_Cipher), Key_Length):
+        Slice.append(Demo_Cipher[Index].upper())
     return Slice
 
-def Get_Frequency(Count, Slice):
+
+def Get_Frequency(Slice):
     """This function defines the dictionary Frequency."""
-    Frequency = {}
     # This defines the dict. Frequency and creates a group of letters that is one every five in the CipherText.
+    Frequency = {}
+    # This empties the Frequency dictionary entry (char) by entry.
     Alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     for char in Alphabet:
         Frequency[char] = 0
-    # This empties the Frequency dictionary entry (char) by entry.
+    # This adds 1 to each value of letter when it is detected in the 1/5 of CipherText.
     for char in Slice:
         Frequency[char] += 1
-    # This adds 1 to each value of letter when it is detected in the 1/5 of CipherText.
+    # This develops a exact percentage of each letter (of total 1/5 CipherText).
     for char in Alphabet:
         Frequency[char] /= len(Slice)
-        # This develops a exact percentage of each letter (of total 1/5 CipherText).
     print(Frequency)
-    Values = Frequency.values()
     # This defines var. values based on dict Frequency.
-    print(sum(Values))
+    Values = Frequency.values()
     # This finds the sum of all values to be used to find percentile.
+    print(sum(Values))
     return Frequency
 
+
 def Key_Finder(Demo_Cipher, Key_Length):
+    """Find the key."""
     Range = 0
-    Count = 0
     FKey = []
+    # This finds the sum of all values to be used to find percentile.
     for Loop in range(0, Key_Length):
         Slice = Get_Slice(Range, Demo_Cipher, Key_Length)
-        Frequency = Get_Frequency(Count, Slice)
-        # This finds the sum of all values to be used to find percentile.
+        Frequency = Get_Frequency(Slice)
         FrCount = 1
-        Loop_Count = 0
         SmLetter = ""
         Alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        # Calls Plaintext_Lookup function and gets the smallest frequency produced from each Slice.
         for char in Alphabet:
             SmFreq = Plaintext_Lookup(char, Frequency)
             print(SmFreq)
@@ -113,10 +119,11 @@ def Key_Finder(Demo_Cipher, Key_Length):
         FKey.insert(Loop, SmLetter)
         print("FrCount:" + str(FrCount))
         print(f"Key = {FKey}")
+        # This dumps var. Slice and changes the var. Range so the slice changes to start at the second letter.
         Range += 1
         Slice = []
-        # This dumps var. Slice and changes the var. Range so the slice changes to start at the second letter.
     return FKey
+
 
 def Final_Output(Cipher_Text, FKey):
     """This function deciphers the ciphertext using the key and generates the final plaintext"""
@@ -124,6 +131,7 @@ def Final_Output(Cipher_Text, FKey):
     Cipher_Text = list(Cipher_Text)
     Pos = 0
     FPText = ""
+    # This separates the alphabetic and non-alphabetic into two groups and looks it up against the key to generate the plaintext. They are then joined back together in order.
     for Index in range(len(Cipher_Text)):
         if not Cipher_Text[Index].isalpha():
             FPText = FPText + (Cipher_Text[Index])
@@ -135,20 +143,23 @@ def Final_Output(Cipher_Text, FKey):
             Pos += 1
     return FPText
 
+
 Demo_Cipher = ""
 Demo_Cipher = list(Demo_Cipher)
+# Insert your Cipher Text here WITH all spaces, punctuation, and numbers.
 Cipher_Text = """WML, HAEXRV SCL ZETTT! OPWCLVR ZTZR. M'E RCEVWCBYC DXDVRY XV GLW NMNV 1883, SCL V LAS BUMK AMGXWG QA LGEMF XZPB VX ODCYH GCM QEQ GMNGZ NWH. (M YDB GLW XLRE XGWZ XZT UBZAT "ZRXMGV OEUZENVVH BB XZT XNWL PONMF 3," LPVGZ XA EIIJQEIV KQRAACO SSJ IQZI SRIQIEN NEIKWURR.) QDC'II HGWOETAG TSL P TBX GU YHIKIQBRK, PVQ EXIME XZT MIIFIA BJ OTQEHEPORHVDV, ZEF, X LBR'L QTNQW NWH! WG WMEI'K LPNX ZPXCIFTL: NJLTZ TPGQVNV, A LIF KWIBVRY P TBX GU NYEC UWE PGHQAK S VTNHAPBBV XXOUX LD BJS UWQYHJTV. RZWC BUSMVP V KGI UL NGQ JNGC (IPNRCH NBV LWIG, FQ IPR ASN!), UL JWATBA GUNVGWGA XIHI KNPDXVT QW WCEXXJT AMUZVNQWH. BVQW QIOC ZXUFIDU KNPDTL ZI FD-NEMWCLVR TAIAHAC! LB CGJ SASO LPNX AI'A YMCT BB PAKM YMCT BUEL? YCFX SH Q JEK IPVRCXVT M ODCYH YXDR EFNBUMFV NBV LXUR FSQG'F VWHXRGL, IPVW OTQEH LGQNRYAM TYQ HPBAWS CC MF BG QVWPUF EFS ANMV IPNX ZT EBYDS UNOW HCEI LXUR FSQG AINTZ OSLWMEIV BM NKSXV. NPD X PNH LD LB ASH AUECT PVW ZPVQ! M'NT VRZWG JRIF VZREL PB ZECXVT HWRQFMGCA HRVTZ CVWHAHVW, PVQ, AWAT, LSM ZVBA LWM EIKI! EUIF X IJSCT, BUEL HBHTAS BEMSCOYI ZPL HWWS UL FGSG GS LGIIID IPESMVP GMET IAH VTAGVGN BUI WCBVVW JVVZWGAR-EFS BVQW QIOC, LDW! YYUZQYC, LXUR FSQG VWF'I LREV . . . TFNGLAG. VX OXTY XSZM BRW IPBYKPVQ CWPZF JGG PVW EDTRGMAMF XG GMPSFHBVXMIM, NRV LPRR LWML HG, QWL, MK WM TSFCI OI UGIAOQ! IPR XABM NKWCBF EDHW FYJKQIIV-IPRC GCTL WWCL GLWXZ USDD-XESBTKGMGCA BYL DV QEFVMESMH UVWKXWAW. TJB YSDEP NRV SCAHYGMA AWGM SYJXWHW SQWHX OWIG M VXL! BJ UDCEWW, IPVW ETIAW LWIG XZTZR MK P LVQWCAVSF-LQQI EPVUYFI WS EYTVGW LGGVRY IW SMFS UR EFS JEMFV UR XG YCFXARM. OYL XB JEK PTY E EXAGECT! BUI DPAG XZXVT M OPVG MK IW TS TPKX XG YIVP, KD Q'II TTMA LASQAK GJB VR LWM CEKI. QG ASH NHR XDZ N AZXTR-WWTQAK LWM FMYWBF, GZPBGMFV EVXZ WQFXGGQPED UQTYJTA, IMKXBVRY IPR '50W LD BEC LD TREJC BUI LLQFX. (A PKPMVTVGEDAG GAAHBRH EN IAODT IAH UDCYHF'I ENPC UWE E OTMX.) M OPVGIV IW PLWRS BYL IPR SDS ERWL, IWB, FMI EUIF X BEENTTRH ZTZR, M SRKVHWCBNPDN ICTWPZRH JXOUX AC NESFI WS E LGIVR SCL ZC LXUR XSEM JEK HPNXLTZRH ACBB JAUBL TATKRW. (SAAB, M LWQAO LWM GVSXV ZMYWB UENT OBRW DNS XZT ZNMDH. PBTWUCYPQ IPNX AHV'G MF IPR LAHBBVQ QWBOK!) PVLASN, Q WYKI ENRLTL GS KPG ASL IW JSJGG NFGJB ZI! A'KM ZEFPORH LD JYIFS QA XG IPR TGECYEUT, IAH A VWG E BDJ NW S EWPOWI ENXUW ZRTSXZZEF. X'DR EDHW PEMVPG SFT WS XZDAR GGDT TSDS ZHWZ-TZN HAHMNWWH BUEL'GM FS HDXHPSG QA XZTAR XABMF, EFS Q NQ DDDVRY IPR RGHBNPYXI! GLSCSF JGG IYP QDCE LWAX, NRV XN NRQ IQZI SVMAXK RWZI DDWXMFV NBV ET, BRPD IPRQ QDC QSF'I SASO CWGLACO! OPWCLVR TAMANSBQA FDPVQMF, 1883"""
-
 # This sets up CipherText to remove spaces and punctuation.
-for I in range(len(Cipher_Text)):
-    if Cipher_Text[I].isalpha():
-        Demo_Cipher.append(Cipher_Text[I])
+for Index in range(len(Cipher_Text)):
+    if Cipher_Text[Index].isalpha():
+        Demo_Cipher.append(Cipher_Text[Index])
 
-# Find the key
+# Insert Key_Length in place of this 5 deduced from last program.
 Key_Length = 5
+# Finds the key.
 FKey = (Key_Finder(Demo_Cipher, Key_Length))
 
 StrKey = "".join(FKey)
 
 FPText = Final_Output(Cipher_Text, StrKey)
+# Prints the final output in all caps. Further puntuational adaptivity may be implemented later.
 print(FPText)
