@@ -3,18 +3,18 @@ Cipher_Text = """WML, HAEXRV SCL ZETTT! OPWCLVR ZTZR. M'E RCEVWCBYC DXDVRY XV GL
 
 def Remove_NonAlpha(Cipher_Text):
     """Removes non-alphabetic characters. """
-    Demo_Cipher = list("")
+    NonAlpha = list("")
     for Index in range(len(Cipher_Text)):
         if Cipher_Text[Index].isalpha():
-            Demo_Cipher.append(Cipher_Text[Index])
-    Demo_Cipher = str(Demo_Cipher)
-    return Demo_Cipher
+            NonAlpha.append(Cipher_Text[Index])
+    NonAlpha = str(NonAlpha)
+    return NonAlpha
 
-Demo_Cipher = Remove_NonAlpha(Cipher_Text)
+NonAlpha = Remove_NonAlpha(Cipher_Text)
 for Index in range(0, len(Cipher_Text)-2):
     # Each set of three letters - trigaphs - (including overlapping) is recorded. Matching ones are noted especially.
-    Trigaph = Demo_Cipher[Index:(Index + 3)]
-    Pos = Demo_Cipher.find(Trigaph, Index+1)
+    Trigaph = NonAlpha[Index:(Index + 3)]
+    Pos = NonAlpha.find(Trigaph, Index+1)
     # The distance between each matching trigaph is recorded. These are printed out in a long list. Key length is the most common divisor of each distance. However, there may be some outliers.
     if not Pos == -1:
         print(Pos - Index)
