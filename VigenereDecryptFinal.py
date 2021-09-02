@@ -67,12 +67,12 @@ def Plaintext_Lookup(Key, Freq):
     return Euclidean_Distance(OBSE, OBST, OBSA, OBSO, OBSI, OBSN, OBSS, OBSH, OBSR, OBSD, OBSL, OBSC, OBSU, OBSM, OBSW, OBSF, OBSG, OBSY, OBSP, OBSB, OBSV, OBSK, OBSJ, OBSX, OBSQ, OBSZ)
 
 
-def Get_Slice(Range, Demo_Cipher, Key_Length):
+def Get_Slice(Range, CipherInput, Key_LengthInput):
     """This function defines the one fifth slice of the Cipher Text."""
     Slice = []
     # This loop makes the following repeat as many times as the key's length.
-    for Index in range(Range, len(Demo_Cipher), Key_Length):
-        Slice.append(Demo_Cipher[Index].upper())
+    for Index in range(Range, len(CipherInput), Key_LengthInput):
+        Slice.append(CipherInput[Index].upper())
     return Slice
 
 
@@ -98,13 +98,13 @@ def Get_Frequency(Slice):
     return Frequency
 
 
-def Key_Finder(Demo_Cipher, Key_Length):
+def Key_Finder(CipherInput2, Key_Length):
     """Finds the key."""
     Range = 0
     FKey = []
     # This finds the sum of all values to be used to find percentile.
     for Loop in range(0, Key_Length):
-        Slice = Get_Slice(Range, Demo_Cipher, Key_Length)
+        Slice = Get_Slice(Range, CipherInput2, Key_Length)
         Frequency = Get_Frequency(Slice)
         FrCount = 1
         SmLetter = ""
