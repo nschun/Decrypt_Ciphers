@@ -163,6 +163,7 @@ Demo_Cipher = Remove_NonAlpha(Cipher_Text)
 # Finds the key.
 FKey = (Key_Finder(Demo_Cipher, Key_Length))
 
+# Makes the Key compatible with final function.
 StrKey = "".join(FKey)
 
 FPText = Final_Output(Cipher_Text, StrKey)
