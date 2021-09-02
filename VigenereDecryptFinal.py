@@ -160,7 +160,7 @@ Cipher_Text = """WML, HAEXRV SCL ZETTT! OPWCLVR ZTZR. M'E RCEVWCBYC DXDVRY XV GL
 Key_Length = 5
 # Removes non-alphabetic characters.
 Demo_Cipher = Remove_NonAlpha(Cipher_Text)
-# Finds the key.
+# Finds the Key.
 FKey = (Key_Finder(Demo_Cipher, Key_Length))
 
 # Makes the Key compatible with final function.
