@@ -19,21 +19,29 @@ def Remove_NonAlpha(Plain_Text):
     return NonAlpha
 
 
-count = 0
+
 NonAlpha = Remove_NonAlpha(Plain_Text)
 NonAlpha = str(NonAlpha)
 NonAlpha = NonAlpha.upper()
 NumberForm1 = []
 NumberForm2 = []
-# Turns Plaintext into corresponding numbers.
-for char in NonAlpha:
-    NumberForm1.append(Letter_Values[NonAlpha[count]])
-    count += 1
-count = 0
-# Turns Key into corresponding numbers.
-for char in Key:
-    NumberForm2.append(Letter_Values[Key[count]])
-    count += 1
+
+
+def ConvertLettertoNumber(Type):
+    """Turns Plaintext and Key into corresponding numbers."""
+    count = 0
+    if Type == NonAlpha:
+        for char in Type:
+            NumberForm1.append(Letter_Values[Type[count]])
+            count += 1
+    else:
+        for char in Type:
+            NumberForm2.append(Letter_Values[Type[count]])
+            count += 1
+
+
+ConvertLettertoNumber(NonAlpha)
+ConvertLettertoNumber(Key)
 # Defines a reverse dictionary of Letter_Values to provide reverse lookup capabilities.
 ReverseLetterValue = {0: "A", 1: "B", 2: "C", 3: "D", 4: "E", 5: "F", 6: "G", 7: "H", 8: "I", 9: "J", 10: "K", 11: "L", 12: "M", 13: "N", 14: "O", 15: "P", 16: "Q", 17: "R", 18: "S", 19: "T", 20: "U", 21: "V", 22: "W", 23: "X", 24: "Y", 25: "Z"}
 count = 0
