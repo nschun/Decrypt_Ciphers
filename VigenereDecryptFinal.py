@@ -99,7 +99,7 @@ def Get_Frequency(Slice):
 
 
 def Key_Finder(Demo_Cipher, Key_Length):
-    """Find the key."""
+    """Finds the key."""
     Range = 0
     FKey = []
     # This finds the sum of all values to be used to find percentile.
@@ -166,5 +166,5 @@ FKey = (Key_Finder(Demo_Cipher, Key_Length))
 StrKey = "".join(FKey)
 
 FPText = Final_Output(Cipher_Text, StrKey)
-# Prints the final output in all caps. Further puntuational adaptivity may be implemented later.
+# Prints the final output in all caps. Further punctuational adaptivity may be implemented later.
 print(FPText)
