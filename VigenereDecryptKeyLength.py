@@ -14,9 +14,9 @@ NonAlpha = Remove_NonAlpha(Cipher_Text)
 for Index in range(0, len(Cipher_Text)-2):
     # Each set of three letters - trigaphs - (including overlapping) is recorded. Matching ones are noted especially.
     Trigaph = NonAlpha[Index:(Index + 3)]
-    Pos = NonAlpha.find(Trigaph, Index+1)
+    Position = NonAlpha.find(Trigaph, Index+1)
     # The distance between each matching trigaph is recorded. These are printed out in a long list. Key length is the most common divisor of each distance. However, there may be some outliers.
-    if not Pos == -1:
-        print(Pos - Index)
+    if not Position == -1:
+        print(Position - Index)
 
 # Note: There may be some changes in later versions that find the divisors for you.
